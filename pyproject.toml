@@ -1,0 +1,30 @@
+[build-system]
+requires = ["scikit-build-core==1.0.3", "pybind11==3.1.0"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "orderbook-engine"
+version = "0.1.0"
+description = "An exchange-style educational matching engine"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.141.1", "uvicorn==0.54.0", "pydantic==2.13.5",
+    "sqlalchemy==2.1.1", "psycopg[binary]==3.3.6", "redis==8.1.0",
+    "alembic==1.20.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.1.1", "httpx==0.28.1", "fakeredis==2.38.0", "pyyaml==6.0.3"]
+
+[tool.scikit-build]
+cmake.build-type = "Release"
+install.strip = false
+wheel.packages = ["python/orderbook", "api"]
+
+[tool.scikit-build.cmake.define]
+BUILD_TESTING = "OFF"
+ORDERBOOK_BUILD_PYTHON = "ON"
+
+[tool.pytest.ini_options]
+testpaths = ["api/tests", "tests"]
+markers = ["integration: requires a disposable PostgreSQL database or live Redis"]

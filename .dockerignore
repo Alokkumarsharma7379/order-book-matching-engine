@@ -1,0 +1,11 @@
+.tools
+.venv
+build
+.git
+.env
+__pycache__
+.pytest_cache
+*.pyc
+*.pyd
+dist
+benchmark-results
